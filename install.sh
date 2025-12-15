@@ -47,7 +47,8 @@ detect_machine_type() {
 parse_package_list() {
     local file="$1"
     if [ -f "$file" ]; then
-        grep -v '^#' "$file" | grep -v '^$' | tr '\n' ' '
+        # Remove inline comments, full-line comments, and empty lines
+        sed 's/#.*//' "$file" | grep -v '^[[:space:]]*$' | awk '{print $1}' | tr '\n' ' '
     fi
 }
 
