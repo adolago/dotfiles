@@ -1,0 +1,110 @@
+{
+  "reload_style_on_change": true,
+  "layer": "top",
+  "position": "top",
+  "spacing": 0,
+  "height": 26,
+  "modules-left": ["hyprland/workspaces"],
+  "modules-center": ["clock"],
+  "modules-right": [
+    "bluetooth",
+    "tray",
+    "network",
+    "pulseaudio",
+    "backlight",
+    "battery",
+    "custom/cpu-full",
+    "memory"
+  ],
+  "hyprland/workspaces": {
+    "on-click": "activate",
+    "format": "{icon} {name}",
+    "format-icons": {
+      "default": "",
+      "active": "",
+      "urgent": "",
+      "empty": ""
+    },
+    "all-outputs": true,
+    "sort-by-number": true,
+    "persistent-workspaces": {
+      "*": 10
+    }
+  },
+  "custom/cpu-full": {
+    "exec": "$HOME/bin/cpu_stats.sh",
+    "interval": 5,
+    "format": "{}",
+    "tooltip": false
+  },
+  "memory": {
+    "interval": 1,
+    "format": "RAM:{percentage:03d}% ",
+    "states": {
+      "critical": 90,
+      "warning": 75
+    },
+    "tooltip": false
+  },
+  "backlight": {
+    "device": "intel_backlight",
+    "format": "BRI:{percent}% ",
+    "on-scroll-up": "brightnessctl set 5%+",
+    "on-scroll-down": "brightnessctl set 5%-",
+    "tooltip": false
+  },
+  "clock": {
+    "format": "{:L%A %H:%M}",
+    "format-alt": "{:L%d %B W%V %Y}",
+    "tooltip": false
+  },
+  "network": {
+    "format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"],
+    "format": "{icon}",
+    "format-wifi": "{icon}",
+    "format-ethernet": "󰀂",
+    "format-disconnected": "󰤮",
+    "interval": 3,
+    "spacing": 1,
+    "on-click": "notification-launch-wifi",
+    "tooltip": false
+  },
+  "battery": {
+    "format": "{capacity}% {icon}",
+    "format-discharging": "{icon}",
+    "format-charging": "{icon}",
+    "format-plugged": "",
+    "format-icons": {
+      "charging": ["󰢜", "󰂆", "󰂇", "󰂈", "󰢝", "󰂉", "󰢞", "󰂊", "󰂋", "󰂅"],
+      "default": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"]
+    },
+    "format-full": "󰂅",
+    "interval": 1,
+    "states": {
+      "warning": 20,
+      "critical": 10
+    },
+    "tooltip": false
+  },
+  "bluetooth": {
+    "format": " {num_connections}",
+    "format-disabled": "󰂲",
+    "format-off": "󰂲",
+    "format-on": "",
+    "format-connected": " {num_connections}",
+    "format-no-devices": "",
+    "interval": 10,
+    "tooltip": false
+  },
+  "pulseaudio": {
+    "format": " {volume}%",
+    "format-muted": "0%",
+    "scroll-step": 5,
+    "max-length": 5,
+    "tooltip": false
+  },
+  "tray": {
+    "icon-size": 16,
+    "spacing": 17
+  }
+}

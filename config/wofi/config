@@ -1,0 +1,26 @@
+# Wofi - Application launcher config
+
+mode=drun
+insensitive=true
+prompt=Search:
+dynamic=true
+lines=15
+columns=1
+
+# Dimensions
+width=640
+height=400
+location=upper-right
+orientation=vertical
+
+# Appearance
+normal_window=false
+hide_scroll=true
+no_actions=true
+
+# Performance
+gtk_dark=false
+allow_images=false
+allow_markup=false
+filter_rate=100
+search_rate=100

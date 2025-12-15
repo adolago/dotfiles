@@ -1,0 +1,108 @@
+/* Waybar - 16-color terminal style */
+* {
+    font-family: 'JetBrainsMono Nerd Font';
+    font-size: 24px;
+    background-color: @background;
+    color: @foreground;
+    border: none;
+    border-radius: 0;
+}
+
+.modules-left {
+    margin-left: 8px;
+}
+
+.modules-right {
+    margin-right: 8px;
+}
+
+#workspaces button {
+    all: initial;
+    padding: 0 6px;
+    margin: 0 1.5px;
+    min-width: 9px;
+    color: @foreground;
+    background: transparent;
+    border: none;
+}
+
+#workspaces button.active {
+    color: #89b4fa;
+    font-weight: bold;
+}
+
+#workspaces button.empty {
+    opacity: 0.4;
+    color: #6c7086;
+}
+
+#workspaces button.urgent {
+    color: #f38ba8;
+}
+
+#workspaces button:hover {
+    background: rgba(137, 180, 250, 0.1);
+    border-radius: 4px;
+}
+
+#cpu, #battery, #pulseaudio, #custom-screenrecording-indicator {
+    min-width: 12px;
+    margin: 0 7.5px;
+}
+
+#memory {
+    margin-left: 15px;
+}
+
+#custom-cpu-full {
+    margin-left: 15px;
+}
+
+#tray {
+    margin-right: 16px;
+}
+
+#bluetooth {
+    margin-right: 17px;
+    min-width: 30px;
+    color: @foreground;
+}
+
+#bluetooth.disabled {
+    color: #6c7086;
+}
+
+#bluetooth.connected {
+    color: @foreground;
+}
+
+#bluetooth:hover {
+    background: rgba(137, 180, 250, 0.1);
+    border-radius: 4px;
+}
+
+#network {
+    margin-right: 13px;
+}
+
+#clock {
+    margin-left: 8.75px;
+}
+
+.hidden {
+    opacity: 0;
+}
+
+tooltip {
+    padding: 2px;
+}
+
+#custom-screenrecording-indicator {
+    min-width: 12px;
+    margin-left: 8.75px;
+    font-size: 10px;
+}
+
+#custom-screenrecording-indicator.active {
+    color: #a55555;
+}

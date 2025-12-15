@@ -1,0 +1,38 @@
+# Mako - Notification daemon config
+
+# Font
+font=JetBrainsMono Nerd Font 12
+
+# Colors
+background-color=#000000
+border-color=#666666
+text-color=#ffffff
+
+# Dimensions
+width=420
+height=100
+
+# Position
+anchor=top-right
+margin=20
+
+# Border
+border-size=2
+border-radius=0
+
+# Icons
+icons=1
+max-icon-size=48
+
+# Actions
+default-timeout=5000
+ignore-timeout=0
+
+# History
+max-history=20
+
+# Sorting
+sort=+time
+
+# Layer
+layer=overlay
