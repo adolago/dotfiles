@@ -1,29 +1,28 @@
-# Laptop-specific packages (Intel, power management, portable)
-# Install with: pacman -S --needed - < laptop.txt
+# Laptop packages - wrk-mob (ThinkPad X1 Carbon Gen 4, i5-6xxx, 8-16GB)
+# Minimal footprint, power management focus
 
-# Intel drivers
+# === Intel Drivers ===
 intel-media-driver
 intel-ucode
 
-# Power management
+# === Power Management ===
 tlp
 tlp-rdw
 thermald
 cpupower
 powertop
 
-# Laptop hardware
+# === Laptop Hardware ===
 sof-firmware
-fprintd
 
-# Additional CLI (useful on-the-go)
-man-db
-man-pages
-s-tui
+# === Fallback Terminal (if wezterm has GPU issues) ===
+kitty
 
-# Containers (portable dev environments)
-podman
-buildah
-
-# Display manager
+# === Display Manager ===
 sddm
+
+# === Lightweight Dev Tools (SSH to svr-core for heavy work) ===
+python-pip
+
+# === NFS (for svr-nas access when on home network) ===
+nfs-utils

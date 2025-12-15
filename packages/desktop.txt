@@ -1,37 +1,55 @@
-# Desktop-specific packages (NVIDIA, gaming, monitors)
-# Install with: pacman -S --needed - < desktop.txt
+# Desktop packages - wrk-main (i5-14500, 96GB RAM, RTX 5060)
+# Heavy workloads that require powerful hardware
 
-# NVIDIA drivers
+# === NVIDIA Drivers ===
 nvidia-open
 nvidia-utils
 nvidia-settings
 libva-nvidia-driver
 lib32-nvidia-utils
 
-# Gaming libraries
+# === Gaming ===
 lib32-glibc
 lib32-libdrm
 lib32-mesa
 gamescope
 wine
 
-# Monitor control (DDC/CI)
+# === Development (heavy compilation) ===
+rustup
+clang
+go
+npm
+python-pip
+jupyterlab
+
+# === AI/ML Tools ===
+# (vLLM runs on svr-core, but client tools here)
+
+# === Monitor Control (DDC/CI for external displays) ===
 ddcutil
 
-# Game streaming
+# === Game/Media Streaming ===
 sunshine-bin
 
-# Desktop apps
+# === Heavy Applications ===
 gimp
 libreoffice-fresh
 qbittorrent
 spotify-launcher
 zoom
 
-# Additional fonts
+# === Extra Fonts ===
 ttf-cascadia-code-nerd
 ttf-fira-code
 ttf-iosevka-nerd
 
-# Display manager
+# === Display Manager ===
 sddm
+
+# === NFS (for svr-nas access) ===
+nfs-utils
+
+# === Multimedia Extras ===
+gst-plugins-bad
+gst-plugins-base

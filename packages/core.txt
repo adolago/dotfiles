@@ -1,8 +1,7 @@
-# Core packages - installed on all machines
-# Lines starting with # are comments
-# Install with: pacman -S --needed - < core.txt
+# Core packages - installed on ALL machines
+# Keep lightweight for older hardware compatibility
 
-# Base system
+# === Base System ===
 base
 base-devel
 linux
@@ -12,28 +11,38 @@ efibootmgr
 sudo
 openssh
 
-# Shell & terminal
+# === Shell & Prompt ===
 bash-completion
-btop
-htop
-neovim
-vim
-nano
 starship
+man-db
+man-pages
 
-# CLI tools
-7zip
-bat
-eza
-fd
-fzf
-git
-lazygit
-ripgrep
+# === Terminal ===
+wezterm
+warp-terminal
+
+# === AUR Helper ===
+paru
+
+# === CLI Essentials (homogenized choices) ===
+bat                 # cat replacement
+btop                # system monitor
+eza                 # ls replacement
+fd                  # find replacement
+fzf                 # fuzzy finder
+htop                # process viewer
+lazygit             # git TUI
+ripgrep             # grep replacement
+yazi                # file manager (chosen over ranger)
 wget
-yazi
+git
 
-# Hyprland desktop
+# === Editors ===
+neovim
+zed
+antigravity
+
+# === Hyprland Desktop ===
 hyprland
 hypridle
 hyprlock
@@ -44,8 +53,9 @@ hyprpolkitagent
 xdg-desktop-portal-gtk
 xdg-desktop-portal-hyprland
 
-# Desktop utilities
+# === Desktop Utilities ===
 brightnessctl
+cliphist
 grim
 slurp
 kanshi
@@ -53,11 +63,10 @@ mako
 pamixer
 pavucontrol
 waybar
-wofi
 wl-clipboard
-cliphist
+wofi
 
-# File manager
+# === File Manager (GUI) ===
 thunar
 thunar-archive-plugin
 thunar-volman
@@ -65,13 +74,17 @@ file-roller
 gvfs
 tumbler
 
-# Fonts
+# === Browsers (both) ===
+google-chrome
+zen-browser-bin
+
+# === Fonts ===
 noto-fonts
 noto-fonts-cjk
 noto-fonts-emoji
 ttf-jetbrains-mono-nerd
 
-# Audio/Video
+# === Audio/Video ===
 pipewire
 pipewire-alsa
 pipewire-pulse
@@ -79,36 +92,24 @@ wireplumber
 gst-plugins-good
 gst-plugins-ugly
 
-# Bluetooth
+# === Bluetooth ===
 bluez
 bluez-utils
 
-# Networking
+# === Networking ===
 networkmanager
 tailscale
-nfs-utils
-nmap
 cloudflared
+nmap
 
-# Development
-clang
-go
-python-pip
-rustup
-npm
-github-cli
-
-# Applications
-discord
-google-chrome
+# === Applications ===
 obsidian
-warp-terminal
 
-# Backup
+# === Backup & Sync ===
 borg
 rclone
 
-# Qt/GTK theming
+# === Qt/GTK Theming ===
 qt5-wayland
 qt6-wayland
 qt5ct
