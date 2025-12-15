@@ -1,0 +1,29 @@
+# Laptop-specific packages (Intel, power management, portable)
+# Install with: pacman -S --needed - < laptop.txt
+
+# Intel drivers
+intel-media-driver
+intel-ucode
+
+# Power management
+tlp
+tlp-rdw
+thermald
+cpupower
+powertop
+
+# Laptop hardware
+sof-firmware
+fprintd
+
+# Additional CLI (useful on-the-go)
+man-db
+man-pages
+s-tui
+
+# Containers (portable dev environments)
+podman
+buildah
+
+# Display manager
+sddm

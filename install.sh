@@ -7,6 +7,7 @@ set -e
 DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CONFIG_DIR="$HOME/.config"
 BIN_DIR="$HOME/bin"
+PACKAGES_DIR="$DOTFILES_DIR/packages"
 
 # Colors for output
 RED='\033[0;31m'
@@ -18,6 +19,20 @@ info() { echo -e "${GREEN}[INFO]${NC} $1"; }
 warn() { echo -e "${YELLOW}[WARN]${NC} $1"; }
 error() { echo -e "${RED}[ERROR]${NC} $1"; }
 
+# Show usage
+usage() {
+    echo "Usage: $0 [OPTIONS]"
+    echo ""
+    echo "Options:"
+    echo "  --packages     Install packages from package lists"
+    echo "  --packages-only  Only install packages, skip config symlinks"
+    echo "  --uninstall    Remove config symlinks"
+    echo "  --diff         Show package differences vs package lists"
+    echo "  -h, --help     Show this help"
+    echo ""
+    echo "Without options, only symlinks configs (no package installation)"
+}
+
 # Detect machine type
 detect_machine_type() {
     # Check for battery - laptops have one
@@ -26,6 +41,80 @@ detect_machine_type() {
     else
         echo "desktop"
     fi
+}
+
+# Parse package list file, removing comments and empty lines
+parse_package_list() {
+    local file="$1"
+    if [ -f "$file" ]; then
+        grep -v '^#' "$file" | grep -v '^$' | tr '\n' ' '
+    fi
+}
+
+# Install packages from package lists
+install_packages() {
+    local machine_type="$1"
+
+    if [ ! -d "$PACKAGES_DIR" ]; then
+        warn "No packages directory found at $PACKAGES_DIR"
+        return 1
+    fi
+
+    info "Installing packages for $machine_type..."
+
+    # Core packages (all machines)
+    if [ -f "$PACKAGES_DIR/core.txt" ]; then
+        info "Installing core packages..."
+        local core_pkgs
+        core_pkgs=$(parse_package_list "$PACKAGES_DIR/core.txt")
+        if [ -n "$core_pkgs" ]; then
+            # shellcheck disable=SC2086
+            sudo pacman -S --needed --noconfirm $core_pkgs || warn "Some core packages failed to install"
+        fi
+    fi
+
+    # Machine-specific packages
+    local machine_file="$PACKAGES_DIR/${machine_type}.txt"
+    if [ -f "$machine_file" ]; then
+        info "Installing $machine_type-specific packages..."
+        local machine_pkgs
+        machine_pkgs=$(parse_package_list "$machine_file")
+        if [ -n "$machine_pkgs" ]; then
+            # shellcheck disable=SC2086
+            sudo pacman -S --needed --noconfirm $machine_pkgs || warn "Some $machine_type packages failed to install"
+        fi
+    fi
+
+    info "Package installation complete!"
+}
+
+# Show diff between installed packages and package lists
+show_package_diff() {
+    local machine_type="$1"
+
+    info "Comparing installed packages with package lists..."
+
+    # Get currently installed explicit packages
+    local installed
+    installed=$(pacman -Qqe | sort)
+
+    # Get packages from lists
+    local listed=""
+    if [ -f "$PACKAGES_DIR/core.txt" ]; then
+        listed="$listed $(parse_package_list "$PACKAGES_DIR/core.txt")"
+    fi
+    if [ -f "$PACKAGES_DIR/${machine_type}.txt" ]; then
+        listed="$listed $(parse_package_list "$PACKAGES_DIR/${machine_type}.txt")"
+    fi
+    listed=$(echo "$listed" | tr ' ' '\n' | sort -u | grep -v '^$')
+
+    echo ""
+    echo "=== Missing (in list but not installed) ==="
+    comm -23 <(echo "$listed") <(echo "$installed") || true
+
+    echo ""
+    echo "=== Extra (installed but not in list) ==="
+    comm -13 <(echo "$listed") <(echo "$installed") || true
 }
 
 # Backup existing config if it exists and isn't a symlink
@@ -119,23 +208,70 @@ main() {
     fi
 }
 
-# Run with --uninstall to remove symlinks
-if [ "$1" = "--uninstall" ]; then
-    info "Removing symlinks..."
-    rm -f "$CONFIG_DIR/hypr/hyprland.conf"
-    rm -f "$CONFIG_DIR/hypr/hypridle.conf"
-    rm -f "$CONFIG_DIR/hypr/hyprlock.conf"
-    rm -f "$CONFIG_DIR/hypr/reload-hyprland.sh"
-    rm -f "$CONFIG_DIR/hypr/host.conf"
-    rm -f "$CONFIG_DIR/waybar/config.jsonc"
-    rm -f "$CONFIG_DIR/waybar/style.css"
-    rm -f "$CONFIG_DIR/mako/config"
-    rm -f "$CONFIG_DIR/wofi/config"
-    rm -f "$CONFIG_DIR/wofi/style.css"
-    rm -f "$BIN_DIR/cpu_stats.sh"
-    rm -f "$BIN_DIR/ram_stats.sh"
-    info "Uninstall complete"
+# Parse command line arguments
+INSTALL_PACKAGES=false
+PACKAGES_ONLY=false
+SHOW_DIFF=false
+
+while [[ $# -gt 0 ]]; do
+    case $1 in
+        --packages)
+            INSTALL_PACKAGES=true
+            shift
+            ;;
+        --packages-only)
+            INSTALL_PACKAGES=true
+            PACKAGES_ONLY=true
+            shift
+            ;;
+        --diff)
+            SHOW_DIFF=true
+            shift
+            ;;
+        --uninstall)
+            info "Removing symlinks..."
+            rm -f "$CONFIG_DIR/hypr/hyprland.conf"
+            rm -f "$CONFIG_DIR/hypr/hypridle.conf"
+            rm -f "$CONFIG_DIR/hypr/hyprlock.conf"
+            rm -f "$CONFIG_DIR/hypr/reload-hyprland.sh"
+            rm -f "$CONFIG_DIR/hypr/host.conf"
+            rm -f "$CONFIG_DIR/waybar/config.jsonc"
+            rm -f "$CONFIG_DIR/waybar/style.css"
+            rm -f "$CONFIG_DIR/mako/config"
+            rm -f "$CONFIG_DIR/wofi/config"
+            rm -f "$CONFIG_DIR/wofi/style.css"
+            rm -f "$BIN_DIR/cpu_stats.sh"
+            rm -f "$BIN_DIR/ram_stats.sh"
+            info "Uninstall complete"
+            exit 0
+            ;;
+        -h|--help)
+            usage
+            exit 0
+            ;;
+        *)
+            error "Unknown option: $1"
+            usage
+            exit 1
+            ;;
+    esac
+done
+
+# Detect machine type
+MACHINE_TYPE=$(detect_machine_type)
+
+# Handle --diff
+if [ "$SHOW_DIFF" = true ]; then
+    show_package_diff "$MACHINE_TYPE"
     exit 0
 fi
 
-main "$@"
+# Install packages if requested
+if [ "$INSTALL_PACKAGES" = true ]; then
+    install_packages "$MACHINE_TYPE"
+fi
+
+# Run main config installation unless --packages-only
+if [ "$PACKAGES_ONLY" = false ]; then
+    main "$@"
+fi

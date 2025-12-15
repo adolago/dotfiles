@@ -28,10 +28,37 @@ The install script auto-detects desktop vs laptop and applies appropriate settin
 │   ├── waybar/
 │   ├── mako/
 │   └── wofi/
+├── packages/
+│   ├── core.txt               # Packages for all machines
+│   ├── desktop.txt            # Desktop-specific (NVIDIA, gaming)
+│   └── laptop.txt             # Laptop-specific (Intel, power mgmt)
 ├── bin/                       # Waybar scripts
 ├── install.sh
 └── README.md
 ```
+
+## Package Management
+
+Sync core software across machines using package lists:
+
+```bash
+# Install configs + packages
+./install.sh --packages
+
+# Only install packages (skip config symlinks)
+./install.sh --packages-only
+
+# Show diff between installed packages and lists
+./install.sh --diff
+```
+
+### Package Lists
+
+- `packages/core.txt` - Essential packages for all machines (Hyprland stack, CLI tools, dev tools)
+- `packages/desktop.txt` - Desktop-specific (NVIDIA drivers, gaming, DDC/CI)
+- `packages/laptop.txt` - Laptop-specific (Intel drivers, power management)
+
+Edit these files to customize your package set.
 
 ## Host-Specific Configuration
 
@@ -58,20 +85,22 @@ To override, edit `~/.config/hypr/host.conf` directly (it's a symlink, so change
 
 3. Reload: `hyprctl reload`
 
+## Sync Workflow
+
+```bash
+# On source machine: push changes
+cd ~/.dotfiles
+git add -A && git commit -m "Update" && git push
+
+# On target machine: pull and apply
+cd ~/.dotfiles  # or ~/dotfiles
+git pull
+./install.sh            # configs only
+./install.sh --packages # configs + packages
+```
+
 ## Uninstall
 
 ```bash
 ~/.dotfiles/install.sh --uninstall
 ```
-
-## Dependencies
-
-- hyprland, hyprpaper, hyprlock, hypridle
-- waybar
-- mako
-- wofi
-- wezterm (terminal)
-- JetBrainsMono Nerd Font
-- lm_sensors (for CPU temp)
-- brightnessctl (laptop)
-- ddcutil (desktop monitor control)

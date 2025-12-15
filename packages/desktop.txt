@@ -1,0 +1,37 @@
+# Desktop-specific packages (NVIDIA, gaming, monitors)
+# Install with: pacman -S --needed - < desktop.txt
+
+# NVIDIA drivers
+nvidia-open
+nvidia-utils
+nvidia-settings
+libva-nvidia-driver
+lib32-nvidia-utils
+
+# Gaming libraries
+lib32-glibc
+lib32-libdrm
+lib32-mesa
+gamescope
+wine
+
+# Monitor control (DDC/CI)
+ddcutil
+
+# Game streaming
+sunshine-bin
+
+# Desktop apps
+gimp
+libreoffice-fresh
+qbittorrent
+spotify-launcher
+zoom
+
+# Additional fonts
+ttf-cascadia-code-nerd
+ttf-fira-code
+ttf-iosevka-nerd
+
+# Display manager
+sddm

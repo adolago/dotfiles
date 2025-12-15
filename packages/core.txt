@@ -1,0 +1,116 @@
+# Core packages - installed on all machines
+# Lines starting with # are comments
+# Install with: pacman -S --needed - < core.txt
+
+# Base system
+base
+base-devel
+linux
+linux-firmware
+grub
+efibootmgr
+sudo
+openssh
+
+# Shell & terminal
+bash-completion
+btop
+htop
+neovim
+vim
+nano
+starship
+
+# CLI tools
+7zip
+bat
+eza
+fd
+fzf
+git
+lazygit
+ripgrep
+wget
+yazi
+
+# Hyprland desktop
+hyprland
+hypridle
+hyprlock
+hyprpaper
+hyprpicker
+hyprshot
+hyprpolkitagent
+xdg-desktop-portal-gtk
+xdg-desktop-portal-hyprland
+
+# Desktop utilities
+brightnessctl
+grim
+slurp
+kanshi
+mako
+pamixer
+pavucontrol
+waybar
+wofi
+wl-clipboard
+cliphist
+
+# File manager
+thunar
+thunar-archive-plugin
+thunar-volman
+file-roller
+gvfs
+tumbler
+
+# Fonts
+noto-fonts
+noto-fonts-cjk
+noto-fonts-emoji
+ttf-jetbrains-mono-nerd
+
+# Audio/Video
+pipewire
+pipewire-alsa
+pipewire-pulse
+wireplumber
+gst-plugins-good
+gst-plugins-ugly
+
+# Bluetooth
+bluez
+bluez-utils
+
+# Networking
+networkmanager
+tailscale
+nfs-utils
+nmap
+cloudflared
+
+# Development
+clang
+go
+python-pip
+rustup
+npm
+github-cli
+
+# Applications
+discord
+google-chrome
+obsidian
+warp-terminal
+
+# Backup
+borg
+rclone
+
+# Qt/GTK theming
+qt5-wayland
+qt6-wayland
+qt5ct
+qt6ct
+nwg-look
