@@ -14,7 +14,7 @@
     "backlight",
     "battery",
     "custom/cpu-full",
-    "memory"
+    "custom/ram"
   ],
   "hyprland/workspaces": {
     "on-click": "activate",
@@ -37,13 +37,10 @@
     "format": "{}",
     "tooltip": false
   },
-  "memory": {
-    "interval": 1,
-    "format": "RAM:{percentage:03d}% ",
-    "states": {
-      "critical": 90,
-      "warning": 75
-    },
+  "custom/ram": {
+    "exec": "$HOME/bin/ram_stats.sh",
+    "interval": 5,
+    "format": "{}",
     "tooltip": false
   },
   "backlight": {

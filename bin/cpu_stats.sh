@@ -1,7 +1,7 @@
 #!/bin/bash
 # Hardware stats for Waybar: CPU/GPU load and temperature
 export LC_ALL=C
-MODE="${1:-both}"
+MODE="${1:-auto}"
 
 cpu_energy_file() {
   local f
@@ -216,6 +216,18 @@ gpu_text=$(printf "GPU:%s/%s/%s" \
   "$(format_temp "$gpu_temp")" \
   "$(format_power "$gpu_power")")
 
+has_gpu() {
+  # Check for NVIDIA GPU
+  if command -v nvidia-smi >/dev/null 2>&1 && nvidia-smi -L >/dev/null 2>&1; then
+    return 0
+  fi
+  # Check for AMD/Intel discrete GPU
+  if ls /sys/class/drm/card*/device/gpu_busy_percent >/dev/null 2>&1; then
+    return 0
+  fi
+  return 1
+}
+
 case "$MODE" in
   cpu)
     printf "%s" "$cpu_text"
@@ -223,7 +235,14 @@ case "$MODE" in
   gpu)
     printf "%s" "$gpu_text"
     ;;
-  *)
+  both)
     printf "%s | %s" "$cpu_text" "$gpu_text"
+    ;;
+  auto|*)
+    if has_gpu; then
+      printf "%s | %s" "$cpu_text" "$gpu_text"
+    else
+      printf "%s" "$cpu_text"
+    fi
     ;;
 esac

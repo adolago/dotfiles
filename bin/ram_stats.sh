@@ -50,4 +50,4 @@ format_percent() {
 }
 
 memory_percent=$(read_memory_usage)
-printf 'RAM:%s' "$(format_percent "$memory_percent")"
+printf ' RAM:%s' "$(format_percent "$memory_percent")"
