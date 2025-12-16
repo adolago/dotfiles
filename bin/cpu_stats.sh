@@ -206,15 +206,29 @@ cpu_temp=$(read_cpu_temp)
 read -r gpu_load gpu_temp < <(read_gpu_metrics)
 gpu_power=$(read_gpu_power_w)
 
-cpu_text=$(printf "CPU:%s/%s/%s" \
-  "$(format_percent "$cpu_usage")" \
-  "$(format_temp "$cpu_temp")" \
-  "$(format_power "$cpu_power")")
+# Build CPU text - skip power if unavailable
+if [[ "$cpu_power" =~ ^[0-9]+$ ]]; then
+  cpu_text=$(printf "CPU:%s/%s/%s" \
+    "$(format_percent "$cpu_usage")" \
+    "$(format_temp "$cpu_temp")" \
+    "$(format_power "$cpu_power")")
+else
+  cpu_text=$(printf "CPU:%s/%s" \
+    "$(format_percent "$cpu_usage")" \
+    "$(format_temp "$cpu_temp")")
+fi
 
-gpu_text=$(printf "GPU:%s/%s/%s" \
-  "$(format_percent "$gpu_load")" \
-  "$(format_temp "$gpu_temp")" \
-  "$(format_power "$gpu_power")")
+# Build GPU text - skip power if unavailable
+if [[ "$gpu_power" =~ ^[0-9]+$ ]]; then
+  gpu_text=$(printf "GPU:%s/%s/%s" \
+    "$(format_percent "$gpu_load")" \
+    "$(format_temp "$gpu_temp")" \
+    "$(format_power "$gpu_power")")
+else
+  gpu_text=$(printf "GPU:%s/%s" \
+    "$(format_percent "$gpu_load")" \
+    "$(format_temp "$gpu_temp")")
+fi
 
 has_gpu() {
   # Check for NVIDIA GPU
