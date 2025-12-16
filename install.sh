@@ -169,10 +169,14 @@ main() {
     # Link host-specific config
     if [ "$machine_type" = "laptop" ]; then
         link_config "$DOTFILES_DIR/config/hypr/hosts/laptop.conf" "$CONFIG_DIR/hypr/host.conf"
-        info "Using laptop configuration (built-in display, touchpad, battery)"
+        link_config "$DOTFILES_DIR/config/flags/chrome-flags-laptop.conf" "$CONFIG_DIR/chrome-flags.conf"
+        link_config "$DOTFILES_DIR/config/flags/electron-flags-laptop.conf" "$CONFIG_DIR/electron-flags.conf"
+        info "Using laptop configuration (1x scale)"
     else
         link_config "$DOTFILES_DIR/config/hypr/hosts/desktop.conf" "$CONFIG_DIR/hypr/host.conf"
-        info "Using desktop configuration (external monitor, HiDPI)"
+        link_config "$DOTFILES_DIR/config/flags/chrome-flags-desktop.conf" "$CONFIG_DIR/chrome-flags.conf"
+        link_config "$DOTFILES_DIR/config/flags/electron-flags-desktop.conf" "$CONFIG_DIR/electron-flags.conf"
+        info "Using desktop configuration (2x HiDPI scale)"
     fi
     
     # Link waybar
