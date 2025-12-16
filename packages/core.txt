@@ -37,21 +37,30 @@ yazi                # file manager (chosen over ranger)
 wget
 git
 
-# === Editors ===
+# === Editors & AI Tools ===
 neovim
 zed
 antigravity
+claude-code
 
-# === Hyprland Desktop ===
+# === Hyprland Suite (full) ===
 hyprland
+hyprcursor
+hyprgraphics
 hypridle
+hyprland-qt-support
+hyprlang
 hyprlock
 hyprpaper
 hyprpicker
-hyprshot
 hyprpolkitagent
-xdg-desktop-portal-gtk
+hyprshot
+hyprsunset
+hyprtoolkit
+hyprutils
+hyprwayland-scanner
 xdg-desktop-portal-hyprland
+xdg-desktop-portal-gtk
 
 # === Desktop Utilities ===
 brightnessctl
@@ -96,14 +105,16 @@ gst-plugins-ugly
 bluez
 bluez-utils
 
-# === Networking ===
+# === Networking & VPN ===
 networkmanager
 tailscale
 cloudflared
+nordvpn-bin
 nmap
 
 # === Applications ===
 obsidian
+bitwarden-cli
 
 # === Backup & Sync ===
 borg
