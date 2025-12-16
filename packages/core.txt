@@ -31,17 +31,17 @@ eza                 # ls replacement
 fd                  # find replacement
 fzf                 # fuzzy finder
 htop                # process viewer
-lazygit             # git TUI
 ripgrep             # grep replacement
-yazi                # file manager (chosen over ranger)
+yazi                # file manager
 wget
 git
 
 # === Editors & AI Tools ===
-neovim
+vim
 zed
 antigravity
 claude-code
+opencode
 
 # === Hyprland Suite (full) ===
 hyprland
