@@ -5,8 +5,8 @@ Hyprland configuration for desktop and laptop workstations.
 ## Quick Install
 
 ```bash
-git clone https://github.com/adolago/dotfiles.git ~/.dotfiles
-cd ~/.dotfiles
+git clone https://github.com/adolago/dotfiles.git ~/Repositories/dotfiles
+cd ~/Repositories/dotfiles
 ./install.sh
 ```
 
@@ -15,7 +15,7 @@ The install script auto-detects desktop vs laptop and applies appropriate settin
 ## Structure
 
 ```
-~/.dotfiles/
+~/Repositories/dotfiles/
 ├── config/
 │   ├── hypr/
 │   │   ├── hyprland.conf      # Shared base config
@@ -89,11 +89,11 @@ To override, edit `~/.config/hypr/host.conf` directly (it's a symlink, so change
 
 ```bash
 # On source machine: push changes
-cd ~/.dotfiles
+cd ~/Repositories/dotfiles
 git add -A && git commit -m "Update" && git push
 
 # On target machine: pull and apply
-cd ~/.dotfiles  # or ~/dotfiles
+cd ~/Repositories/dotfiles
 git pull
 ./install.sh            # configs only
 ./install.sh --packages # configs + packages
@@ -102,5 +102,5 @@ git pull
 ## Uninstall
 
 ```bash
-~/.dotfiles/install.sh --uninstall
+~/Repositories/dotfiles/install.sh --uninstall
 ```
