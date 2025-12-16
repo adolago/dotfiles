@@ -40,10 +40,7 @@
     color: #f38ba8;
 }
 
-#workspaces button:hover {
-    background: rgba(137, 180, 250, 0.1);
-    border-radius: 4px;
-}
+/* No hover effects - keyboard focused */
 
 #cpu, #battery, #pulseaudio, #custom-screenrecording-indicator {
     min-width: 12px;
@@ -76,10 +73,6 @@
     color: @foreground;
 }
 
-#bluetooth:hover {
-    background: rgba(137, 180, 250, 0.1);
-    border-radius: 4px;
-}
 
 #network {
     margin-right: 13px;
@@ -93,9 +86,7 @@
     opacity: 0;
 }
 
-tooltip {
-    padding: 2px;
-}
+/* Tooltips disabled in config */
 
 #custom-screenrecording-indicator {
     min-width: 12px;
