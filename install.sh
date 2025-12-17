@@ -157,6 +157,8 @@ main() {
     mkdir -p "$CONFIG_DIR/waybar"
     mkdir -p "$CONFIG_DIR/mako"
     mkdir -p "$CONFIG_DIR/wofi"
+    mkdir -p "$CONFIG_DIR/wezterm"
+    mkdir -p "$CONFIG_DIR/yazi"
     mkdir -p "$BIN_DIR"
     
     # Link hyprland configs
@@ -189,7 +191,17 @@ main() {
     # Link wofi
     link_config "$DOTFILES_DIR/config/wofi/config" "$CONFIG_DIR/wofi/config"
     link_config "$DOTFILES_DIR/config/wofi/style.css" "$CONFIG_DIR/wofi/style.css"
-    
+
+    # Link wezterm
+    link_config "$DOTFILES_DIR/config/wezterm/wezterm.lua" "$CONFIG_DIR/wezterm/wezterm.lua"
+
+    # Link vim
+    link_config "$DOTFILES_DIR/config/vim/vimrc" "$HOME/.vimrc"
+
+    # Link yazi
+    link_config "$DOTFILES_DIR/config/yazi/yazi.toml" "$CONFIG_DIR/yazi/yazi.toml"
+    link_config "$DOTFILES_DIR/config/yazi/theme.toml" "$CONFIG_DIR/yazi/theme.toml"
+
     # Link scripts
     link_config "$DOTFILES_DIR/bin/cpu_stats.sh" "$BIN_DIR/cpu_stats.sh"
     link_config "$DOTFILES_DIR/bin/ram_stats.sh" "$BIN_DIR/ram_stats.sh"
@@ -245,6 +257,10 @@ while [[ $# -gt 0 ]]; do
             rm -f "$CONFIG_DIR/mako/config"
             rm -f "$CONFIG_DIR/wofi/config"
             rm -f "$CONFIG_DIR/wofi/style.css"
+            rm -f "$CONFIG_DIR/wezterm/wezterm.lua"
+            rm -f "$HOME/.vimrc"
+            rm -f "$CONFIG_DIR/yazi/yazi.toml"
+            rm -f "$CONFIG_DIR/yazi/theme.toml"
             rm -f "$BIN_DIR/cpu_stats.sh"
             rm -f "$BIN_DIR/ram_stats.sh"
             info "Uninstall complete"
