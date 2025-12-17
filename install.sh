@@ -181,9 +181,13 @@ main() {
         info "Using desktop configuration (2x HiDPI scale)"
     fi
     
-    # Link waybar
+    # Link waybar (host-specific style)
     link_config "$DOTFILES_DIR/config/waybar/config.jsonc" "$CONFIG_DIR/waybar/config.jsonc"
-    link_config "$DOTFILES_DIR/config/waybar/style.css" "$CONFIG_DIR/waybar/style.css"
+    if [ "$machine_type" = "laptop" ]; then
+        link_config "$DOTFILES_DIR/config/waybar/style-laptop.css" "$CONFIG_DIR/waybar/style.css"
+    else
+        link_config "$DOTFILES_DIR/config/waybar/style-desktop.css" "$CONFIG_DIR/waybar/style.css"
+    fi
     
     # Link mako
     link_config "$DOTFILES_DIR/config/mako/config" "$CONFIG_DIR/mako/config"

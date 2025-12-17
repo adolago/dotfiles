@@ -1,9 +1,9 @@
-/* Waybar - 16-color terminal style */
+/* Waybar - Transparent with white text */
 * {
     font-family: 'JetBrainsMono Nerd Font';
     font-size: 24px;
-    background-color: @background;
-    color: @foreground;
+    background-color: transparent;
+    color: #ffffff;
     border: none;
     border-radius: 0;
 }
@@ -21,23 +21,23 @@
     padding: 0 6px;
     margin: 0 1.5px;
     min-width: 9px;
-    color: @foreground;
+    color: #ffffff;
     background: transparent;
     border: none;
 }
 
 #workspaces button.active {
-    color: #89b4fa;
+    color: #ffffff;
     font-weight: bold;
 }
 
 #workspaces button.empty {
     opacity: 0.4;
-    color: #6c7086;
+    color: #888888;
 }
 
 #workspaces button.urgent {
-    color: #f38ba8;
+    color: #ff6666;
 }
 
 /* No hover effects - keyboard focused */
@@ -62,15 +62,15 @@
 #bluetooth {
     margin-right: 17px;
     min-width: 30px;
-    color: @foreground;
+    color: #ffffff;
 }
 
 #bluetooth.disabled {
-    color: #6c7086;
+    color: #888888;
 }
 
 #bluetooth.connected {
-    color: @foreground;
+    color: #ffffff;
 }
 
 
@@ -95,5 +95,5 @@
 }
 
 #custom-screenrecording-indicator.active {
-    color: #a55555;
+    color: #ff6666;
 }

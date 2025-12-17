@@ -1,0 +1,94 @@
+/* Waybar - Laptop (1x scale) */
+* {
+    font-family: 'JetBrainsMono Nerd Font';
+    font-size: 12px;
+    background-color: transparent;
+    color: #ffffff;
+    border: none;
+    border-radius: 0;
+}
+
+.modules-left {
+    margin-left: 4px;
+}
+
+.modules-right {
+    margin-right: 4px;
+}
+
+#workspaces button {
+    all: initial;
+    padding: 0 3px;
+    margin: 0 1px;
+    min-width: 5px;
+    color: #ffffff;
+    background: transparent;
+    border: none;
+}
+
+#workspaces button.active {
+    color: #ffffff;
+    font-weight: bold;
+}
+
+#workspaces button.empty {
+    opacity: 0.4;
+    color: #888888;
+}
+
+#workspaces button.urgent {
+    color: #ff6666;
+}
+
+#cpu, #battery, #pulseaudio, #custom-screenrecording-indicator {
+    min-width: 6px;
+    margin: 0 4px;
+}
+
+#memory {
+    margin-left: 8px;
+}
+
+#custom-cpu-full {
+    margin-left: 8px;
+}
+
+#tray {
+    margin-right: 8px;
+}
+
+#bluetooth {
+    margin-right: 8px;
+    min-width: 15px;
+    color: #ffffff;
+}
+
+#bluetooth.disabled {
+    color: #888888;
+}
+
+#bluetooth.connected {
+    color: #ffffff;
+}
+
+#network {
+    margin-right: 6px;
+}
+
+#clock {
+    margin-left: 4px;
+}
+
+.hidden {
+    opacity: 0;
+}
+
+#custom-screenrecording-indicator {
+    min-width: 6px;
+    margin-left: 4px;
+    font-size: 5px;
+}
+
+#custom-screenrecording-indicator.active {
+    color: #ff6666;
+}
