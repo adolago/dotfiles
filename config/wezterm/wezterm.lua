@@ -8,7 +8,7 @@ local config = wezterm.config_builder()
 --------------------------------------------------------------------------------
 config.colors = {
   foreground = '#adbcbc',
-  background = '#103c48',
+  background = '#1c1c1c',
 
   cursor_bg = '#41c7b9',
   cursor_fg = '#103c48',
@@ -20,7 +20,7 @@ config.colors = {
   ansi = {
     '#184956', -- black
     '#fa5750', -- red
-    '#75b938', -- green
+    '#41c7b9', -- green (using cyan for easier reading)
     '#dbb32d', -- yellow
     '#4695f7', -- blue
     '#f275be', -- magenta
@@ -39,12 +39,12 @@ config.colors = {
   },
 
   tab_bar = {
-    background = '#0b2c33',
-    active_tab = { bg_color = '#103c48', fg_color = '#adbcbc' },
-    inactive_tab = { bg_color = '#0b2c33', fg_color = '#72898f' },
-    inactive_tab_hover = { bg_color = '#184956', fg_color = '#adbcbc' },
-    new_tab = { bg_color = '#0b2c33', fg_color = '#72898f' },
-    new_tab_hover = { bg_color = '#184956', fg_color = '#adbcbc' },
+    background = '#141414',
+    active_tab = { bg_color = '#1c1c1c', fg_color = '#adbcbc' },
+    inactive_tab = { bg_color = '#141414', fg_color = '#72898f' },
+    inactive_tab_hover = { bg_color = '#2a2a2a', fg_color = '#adbcbc' },
+    new_tab = { bg_color = '#141414', fg_color = '#72898f' },
+    new_tab_hover = { bg_color = '#2a2a2a', fg_color = '#adbcbc' },
   },
 }
 
@@ -60,9 +60,16 @@ config.enable_tab_bar = true
 config.hide_tab_bar_if_only_one_tab = true
 config.tab_bar_at_bottom = true
 config.show_tab_index_in_tab_bar = true
+config.window_close_confirmation = 'NeverPrompt'
+
+-- Tab bar font size
+config.window_frame = {
+  font = wezterm.font('JetBrainsMono Nerd Font'),
+  font_size = 24.0,
+}
 
 config.window_padding = { left = 8, right = 8, top = 8, bottom = 8 }
-config.window_background_opacity = 1.0
+config.window_background_opacity = 0.9
 
 --------------------------------------------------------------------------------
 -- Terminal Behavior
@@ -142,12 +149,15 @@ config.mouse_bindings = {
 
 --------------------------------------------------------------------------------
 -- SSH Domains (homelab)
+-- Configure your own hosts in ~/.ssh/config then reference here
+-- Example: { name = 'server', remote_address = 'server.local', username = 'user' }
 --------------------------------------------------------------------------------
 config.ssh_domains = {
-  { name = 'wrk-mob',  remote_address = 'wrk-mob',  username = 'artur' },
-  { name = 'svr-host', remote_address = 'svr-host', username = 'artur' },
-  { name = 'svr-core', remote_address = 'svr-core', username = 'artur' },
-  { name = 'svr-nas',  remote_address = 'svr-nas',  username = 'artur' },
+  -- Uncomment and customize for your homelab:
+  -- { name = 'laptop',   remote_address = 'laptop.local',   username = 'user' },
+  -- { name = 'hypervisor', remote_address = 'hypervisor.local', username = 'user' },
+  -- { name = 'compute',  remote_address = 'compute.local',  username = 'user' },
+  -- { name = 'storage',  remote_address = 'storage.local',  username = 'user' },
 }
 
 return config

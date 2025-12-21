@@ -1,5 +1,5 @@
-# Laptop packages - wrk-mob (ThinkPad X1 Carbon Gen 4, i5-6xxx, 8-16GB)
-# Minimal footprint, power management focus
+# Laptop packages - Mobile workstation
+# Minimal footprint, power management, Intel graphics
 
 # === Intel Drivers ===
 intel-media-driver
@@ -21,8 +21,8 @@ kitty
 # === Display Manager ===
 sddm
 
-# === Lightweight Dev Tools (SSH to svr-core for heavy work) ===
+# === Lightweight Dev Tools (SSH to compute server for heavy work) ===
 python-pip
 
-# === NFS (for svr-nas access when on home network) ===
+# === NFS (for NAS access when on home network) ===
 nfs-utils

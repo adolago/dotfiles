@@ -5,8 +5,8 @@ Hyprland configuration for desktop and laptop workstations.
 ## Quick Install
 
 ```bash
-git clone https://github.com/adolago/dotfiles.git ~/Repositories/dotfiles
-cd ~/Repositories/dotfiles
+git clone <this-repo-url> ~/.dotfiles
+cd ~/.dotfiles
 ./install.sh
 ```
 

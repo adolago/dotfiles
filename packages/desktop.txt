@@ -1,5 +1,5 @@
-# Desktop packages - wrk-main (i5-14500, 96GB RAM, RTX 5060)
-# Heavy workloads that require powerful hardware
+# Desktop packages - High-performance workstation
+# Heavy workloads: NVIDIA GPU, gaming, development
 
 # === NVIDIA Drivers ===
 nvidia-open
@@ -24,7 +24,7 @@ python-pip
 jupyterlab
 
 # === AI/ML Tools ===
-# (vLLM runs on svr-core, but client tools here)
+# (vLLM runs on compute server, client tools here)
 
 # === Monitor Control (DDC/CI for external displays) ===
 ddcutil
@@ -47,7 +47,7 @@ ttf-iosevka-nerd
 # === Display Manager ===
 sddm
 
-# === NFS (for svr-nas access) ===
+# === NFS (for NAS access) ===
 nfs-utils
 
 # === Multimedia Extras ===
