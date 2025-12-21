@@ -1,9 +1,9 @@
-/* Waybar - Transparent with white text */
+/* Waybar - Neutral dark with Selenized accents */
 * {
     font-family: 'JetBrainsMono Nerd Font';
     font-size: 24px;
-    background-color: transparent;
-    color: #ffffff;
+    background-color: rgba(28, 28, 28, 0.9);
+    color: #adbcbc;
     border: none;
     border-radius: 0;
 }
@@ -21,26 +21,24 @@
     padding: 0 6px;
     margin: 0 1.5px;
     min-width: 9px;
-    color: #ffffff;
+    color: #72898f;
     background: transparent;
     border: none;
 }
 
 #workspaces button.active {
-    color: #ffffff;
+    color: #41c7b9;
     font-weight: bold;
 }
 
 #workspaces button.empty {
     opacity: 0.4;
-    color: #888888;
+    color: #72898f;
 }
 
 #workspaces button.urgent {
-    color: #ff6666;
+    color: #fa5750;
 }
-
-/* No hover effects - keyboard focused */
 
 #cpu, #battery, #pulseaudio, #custom-screenrecording-indicator {
     min-width: 12px;
@@ -62,17 +60,16 @@
 #bluetooth {
     margin-right: 17px;
     min-width: 30px;
-    color: #ffffff;
+    color: #adbcbc;
 }
 
 #bluetooth.disabled {
-    color: #888888;
+    color: #72898f;
 }
 
 #bluetooth.connected {
-    color: #ffffff;
+    color: #41c7b9;
 }
-
 
 #network {
     margin-right: 13px;
@@ -80,13 +77,12 @@
 
 #clock {
     margin-left: 8.75px;
+    color: #adbcbc;
 }
 
 .hidden {
     opacity: 0;
 }
-
-/* Tooltips disabled in config */
 
 #custom-screenrecording-indicator {
     min-width: 12px;
@@ -95,5 +91,5 @@
 }
 
 #custom-screenrecording-indicator.active {
-    color: #ff6666;
+    color: #fa5750;
 }

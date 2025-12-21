@@ -1,9 +1,9 @@
-/* Wofi - Selenized Dark */
-@define-color background #103c48;
+/* Wofi - Neutral dark with Selenized accents */
+@define-color background #1c1c1c;
 @define-color foreground #adbcbc;
-@define-color border #2d5b69;
-@define-color selected #4695f7;
-@define-color selected-text #103c48;
+@define-color border #2a2a2a;
+@define-color selected #41c7b9;
+@define-color selected-text #1c1c1c;
 
 * {
     font-family: "JetBrainsMono Nerd Font";
