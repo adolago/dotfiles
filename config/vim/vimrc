@@ -40,6 +40,7 @@ set wildmode=longest:full,full
 set scrolloff=5
 set sidescrolloff=5
 set signcolumn=yes
+set cursorline
 
 " Behavior
 set hidden
@@ -102,6 +103,9 @@ nnoremap <leader><CR> :nohlsearch<CR>
 
 " Quick save
 nnoremap <leader>w :w<CR>
+
+" Toggle cursorline
+nnoremap <leader>c :set cursorline! cursorcolumn!<CR>
 
 " Buffer navigation
 nnoremap <leader>bn :bnext<CR>
