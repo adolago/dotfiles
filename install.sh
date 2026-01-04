@@ -166,7 +166,9 @@ main() {
     link_config "$DOTFILES_DIR/config/hypr/hypridle.conf" "$CONFIG_DIR/hypr/hypridle.conf"
     link_config "$DOTFILES_DIR/config/hypr/hyprlock.conf" "$CONFIG_DIR/hypr/hyprlock.conf"
     link_config "$DOTFILES_DIR/config/hypr/reload-hyprland.sh" "$CONFIG_DIR/hypr/reload-hyprland.sh"
+    link_config "$DOTFILES_DIR/config/hypr/cycle-display-mode.sh" "$CONFIG_DIR/hypr/cycle-display-mode.sh"
     chmod +x "$CONFIG_DIR/hypr/reload-hyprland.sh"
+    chmod +x "$CONFIG_DIR/hypr/cycle-display-mode.sh"
     
     # Link host-specific config
     if [ "$machine_type" = "laptop" ]; then
@@ -182,10 +184,11 @@ main() {
     fi
     
     # Link waybar (host-specific style)
-    link_config "$DOTFILES_DIR/config/waybar/config.jsonc" "$CONFIG_DIR/waybar/config.jsonc"
     if [ "$machine_type" = "laptop" ]; then
+        link_config "$DOTFILES_DIR/config/waybar/config-laptop.jsonc" "$CONFIG_DIR/waybar/config.jsonc"
         link_config "$DOTFILES_DIR/config/waybar/style-laptop.css" "$CONFIG_DIR/waybar/style.css"
     else
+        link_config "$DOTFILES_DIR/config/waybar/config.jsonc" "$CONFIG_DIR/waybar/config.jsonc"
         link_config "$DOTFILES_DIR/config/waybar/style-desktop.css" "$CONFIG_DIR/waybar/style.css"
     fi
     
@@ -209,8 +212,14 @@ main() {
     # Link scripts
     link_config "$DOTFILES_DIR/bin/cpu_stats.sh" "$BIN_DIR/cpu_stats.sh"
     link_config "$DOTFILES_DIR/bin/ram_stats.sh" "$BIN_DIR/ram_stats.sh"
+    link_config "$DOTFILES_DIR/bin/backup-to-nas.sh" "$BIN_DIR/backup-to-nas.sh"
+    link_config "$DOTFILES_DIR/bin/mount-nas.sh" "$BIN_DIR/mount-nas.sh"
+    link_config "$DOTFILES_DIR/bin/setup-environment.sh" "$BIN_DIR/setup-environment.sh"
     chmod +x "$BIN_DIR/cpu_stats.sh"
     chmod +x "$BIN_DIR/ram_stats.sh"
+    chmod +x "$BIN_DIR/backup-to-nas.sh"
+    chmod +x "$BIN_DIR/mount-nas.sh"
+    chmod +x "$BIN_DIR/setup-environment.sh"
     
     info ""
     info "Installation complete!"
@@ -255,6 +264,7 @@ while [[ $# -gt 0 ]]; do
             rm -f "$CONFIG_DIR/hypr/hypridle.conf"
             rm -f "$CONFIG_DIR/hypr/hyprlock.conf"
             rm -f "$CONFIG_DIR/hypr/reload-hyprland.sh"
+            rm -f "$CONFIG_DIR/hypr/cycle-display-mode.sh"
             rm -f "$CONFIG_DIR/hypr/host.conf"
             rm -f "$CONFIG_DIR/waybar/config.jsonc"
             rm -f "$CONFIG_DIR/waybar/style.css"
@@ -267,6 +277,9 @@ while [[ $# -gt 0 ]]; do
             rm -f "$CONFIG_DIR/yazi/theme.toml"
             rm -f "$BIN_DIR/cpu_stats.sh"
             rm -f "$BIN_DIR/ram_stats.sh"
+            rm -f "$BIN_DIR/backup-to-nas.sh"
+            rm -f "$BIN_DIR/mount-nas.sh"
+            rm -f "$BIN_DIR/setup-environment.sh"
             info "Uninstall complete"
             exit 0
             ;;

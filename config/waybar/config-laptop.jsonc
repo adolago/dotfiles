@@ -11,6 +11,7 @@
     "tray",
     "network",
     "pulseaudio",
+    "backlight",
     "battery",
     "custom/cpu-full",
     "custom/ram"
@@ -40,6 +41,13 @@
     "exec": "$HOME/bin/ram_stats.sh",
     "interval": 5,
     "format": "{}",
+    "tooltip": false
+  },
+  "backlight": {
+    "device": "intel_backlight",
+    "format": "BRI:{percent}% ",
+    "on-scroll-up": "brightnessctl set 5%+",
+    "on-scroll-down": "brightnessctl set 5%-",
     "tooltip": false
   },
   "clock": {
