@@ -53,7 +53,8 @@ config.colors = {
 --------------------------------------------------------------------------------
 config.font = wezterm.font('JetBrainsMono Nerd Font')
 config.font_size = 12.0
-config.line_height = 1.2
+config.line_height = 1.3
+config.adjust_window_size_when_changing_font_size = true
 
 config.window_decorations = 'NONE'
 config.enable_tab_bar = true
@@ -75,12 +76,18 @@ config.window_background_opacity = 0.9
 -- Terminal Behavior
 --------------------------------------------------------------------------------
 config.default_cursor_style = 'SteadyBlock'
+config.cursor_blink_rate = 0
 config.audible_bell = 'Disabled'
 config.scrollback_lines = 10000
 
 config.skip_close_confirmation_for_processes_named = {
   'bash', 'sh', 'zsh', 'fish', 'tmux', 'vim', 'yazi'
 }
+
+-- Disable close confirmation for all processes
+wezterm.on('mux-is-process-stateful', function(proc)
+  return false
+end)
 
 -- Wayland / GPU
 config.enable_wayland = true

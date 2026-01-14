@@ -34,6 +34,7 @@ htop                # process viewer
 ripgrep             # grep replacement
 yazi                # file manager
 wget
+rsync
 git
 
 # === Editors & AI Tools ===
