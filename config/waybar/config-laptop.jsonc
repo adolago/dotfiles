@@ -17,14 +17,7 @@
     "custom/ram"
   ],
   "hyprland/workspaces": {
-    "on-click": "activate",
-    "format": "{icon} {name}",
-    "format-icons": {
-      "default": "",
-      "active": "",
-      "urgent": "",
-      "empty": ""
-    },
+    "format": "{name}",
     "all-outputs": true,
     "sort-by-number": true,
     "persistent-workspaces": {
@@ -51,8 +44,8 @@
     "tooltip": false
   },
   "clock": {
-    "format": "{:L%A %H:%M}",
-    "format-alt": "{:L%d %B W%V %Y}",
+    "format": "{:%a %d %H:%M:%S}",
+    "interval": 1,
     "tooltip": false
   },
   "network": {
@@ -63,7 +56,6 @@
     "format-disconnected": "󰤮",
     "interval": 3,
     "spacing": 1,
-    "on-click": "notification-launch-wifi",
     "tooltip": false
   },
   "battery": {

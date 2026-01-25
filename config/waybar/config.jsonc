@@ -9,21 +9,13 @@
   "modules-right": [
     "bluetooth",
     "tray",
-    "network",
     "pulseaudio",
     "battery",
     "custom/cpu-full",
     "custom/ram"
   ],
   "hyprland/workspaces": {
-    "on-click": "activate",
-    "format": "{icon} {name}",
-    "format-icons": {
-      "default": "",
-      "active": "",
-      "urgent": "",
-      "empty": ""
-    },
+    "format": "{name}",
     "all-outputs": true,
     "sort-by-number": true,
     "persistent-workspaces": {
@@ -43,8 +35,8 @@
     "tooltip": false
   },
   "clock": {
-    "format": "{:L%A %H:%M}",
-    "format-alt": "{:L%d %B W%V %Y}",
+    "format": "{:%a %d %H:%M:%S}",
+    "interval": 1,
     "tooltip": false
   },
   "network": {
@@ -55,7 +47,6 @@
     "format-disconnected": "󰤮",
     "interval": 3,
     "spacing": 1,
-    "on-click": "notification-launch-wifi",
     "tooltip": false
   },
   "battery": {
@@ -76,14 +67,15 @@
     "tooltip": false
   },
   "bluetooth": {
-    "format": " {num_connections}",
+    "format": "󰂯 {num_connections}",
     "format-disabled": "󰂲",
     "format-off": "󰂲",
-    "format-on": "",
-    "format-connected": " {num_connections}",
+    "format-on": "󰂯 {num_connections}",
+    "format-connected": "󰂯 {num_connections}",
     "format-no-devices": "",
     "interval": 10,
-    "tooltip": false
+    "tooltip": false,
+    "on-click": "blueman-manager"
   },
   "pulseaudio": {
     "format": " {volume}%",

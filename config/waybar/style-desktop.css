@@ -18,26 +18,34 @@
 
 #workspaces button {
     all: initial;
-    padding: 0 6px;
-    margin: 0 1.5px;
-    min-width: 9px;
-    color: #72898f;
+    font-family: 'JetBrainsMono Nerd Font';
+    font-size: 24px;
+    padding: 0 8px;
+    margin: 0 2px;
+    min-width: 16px;
+    color: #adbcbc;
     background: transparent;
     border: none;
+    border-bottom: 2px solid transparent;
 }
 
 #workspaces button.active {
     color: #41c7b9;
-    font-weight: bold;
+    border-bottom: 2px solid #41c7b9;
+}
+
+/* Occupied but not focused - subtle dot indicator */
+#workspaces button:not(.empty):not(.active) {
+    border-bottom: 2px solid #72898f;
 }
 
 #workspaces button.empty {
-    opacity: 0.4;
-    color: #72898f;
+    color: #3a4a4d;
 }
 
 #workspaces button.urgent {
     color: #fa5750;
+    border-bottom: 2px solid #fa5750;
 }
 
 #cpu, #battery, #pulseaudio, #custom-screenrecording-indicator {

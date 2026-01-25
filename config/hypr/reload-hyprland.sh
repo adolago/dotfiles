@@ -7,7 +7,7 @@ hyprctl reload
 
 killall waybar 2>/dev/null
 sleep 1
-waybar &
+"$HOME/.config/hypr/start-waybar.sh" &
 
 killall hyprpaper 2>/dev/null
 sleep 1

@@ -11,10 +11,10 @@ config.colors = {
   background = '#1c1c1c',
 
   cursor_bg = '#41c7b9',
-  cursor_fg = '#103c48',
+  cursor_fg = '#1c1c1c',
   cursor_border = '#41c7b9',
 
-  selection_fg = '#103c48',
+  selection_fg = '#1c1c1c',
   selection_bg = '#adbcbc',
 
   ansi = {
@@ -70,7 +70,7 @@ config.window_frame = {
 }
 
 config.window_padding = { left = 8, right = 8, top = 8, bottom = 8 }
-config.window_background_opacity = 0.9
+config.window_background_opacity = 0.95
 
 --------------------------------------------------------------------------------
 -- Terminal Behavior
@@ -156,15 +156,12 @@ config.mouse_bindings = {
 
 --------------------------------------------------------------------------------
 -- SSH Domains (homelab)
--- Configure your own hosts in ~/.ssh/config then reference here
--- Example: { name = 'server', remote_address = 'server.local', username = 'user' }
 --------------------------------------------------------------------------------
 config.ssh_domains = {
-  -- Uncomment and customize for your homelab:
-  -- { name = 'laptop',   remote_address = 'laptop.local',   username = 'user' },
-  -- { name = 'hypervisor', remote_address = 'hypervisor.local', username = 'user' },
-  -- { name = 'compute',  remote_address = 'compute.local',  username = 'user' },
-  -- { name = 'storage',  remote_address = 'storage.local',  username = 'user' },
+  { name = 'wrk-mob',  remote_address = 'wrk-mob',  username = 'artur' },
+  { name = 'svr-host', remote_address = 'svr-host', username = 'artur' },
+  { name = 'svr-core', remote_address = 'svr-core', username = 'artur' },
+  { name = 'svr-nas',  remote_address = 'svr-nas',  username = 'artur' },
 }
 
 return config

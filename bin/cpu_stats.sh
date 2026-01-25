@@ -129,12 +129,25 @@ dim_leading_zeros() {
   if [[ "$s" =~ ^0+ ]]; then
     local zeros="${BASH_REMATCH[0]}"
     local rest="${s#"$zeros"}"
-    local dimmed=""
-    local i
-    for ((i = 0; i < ${#zeros}; i++)); do
-      dimmed+='<span alpha="35%">0</span>'
-    done
-    printf '%s' "${dimmed}${rest}"
+
+    # If rest is only a unit (%, °C, W), value is actually zero - keep last 0 visible
+    if [[ "$rest" =~ ^[%°CW]+$ ]]; then
+      local dimmed=""
+      local i
+      # Dim all zeros except the last one
+      for ((i = 0; i < ${#zeros} - 1; i++)); do
+        dimmed+='<span alpha="35%">0</span>'
+      done
+      printf '%s' "${dimmed}0${rest}"
+    else
+      # Has significant digits after - dim all leading zeros
+      local dimmed=""
+      local i
+      for ((i = 0; i < ${#zeros}; i++)); do
+        dimmed+='<span alpha="35%">0</span>'
+      done
+      printf '%s' "${dimmed}${rest}"
+    fi
   else
     printf '%s' "$s"
   fi

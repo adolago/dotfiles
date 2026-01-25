@@ -166,8 +166,10 @@ main() {
     link_config "$DOTFILES_DIR/config/hypr/hypridle.conf" "$CONFIG_DIR/hypr/hypridle.conf"
     link_config "$DOTFILES_DIR/config/hypr/hyprlock.conf" "$CONFIG_DIR/hypr/hyprlock.conf"
     link_config "$DOTFILES_DIR/config/hypr/reload-hyprland.sh" "$CONFIG_DIR/hypr/reload-hyprland.sh"
+    link_config "$DOTFILES_DIR/config/hypr/start-waybar.sh" "$CONFIG_DIR/hypr/start-waybar.sh"
     link_config "$DOTFILES_DIR/config/hypr/cycle-display-mode.sh" "$CONFIG_DIR/hypr/cycle-display-mode.sh"
     chmod +x "$CONFIG_DIR/hypr/reload-hyprland.sh"
+    chmod +x "$CONFIG_DIR/hypr/start-waybar.sh"
     chmod +x "$CONFIG_DIR/hypr/cycle-display-mode.sh"
     
     # Link host-specific config
@@ -208,6 +210,9 @@ main() {
     # Link yazi
     link_config "$DOTFILES_DIR/config/yazi/yazi.toml" "$CONFIG_DIR/yazi/yazi.toml"
     link_config "$DOTFILES_DIR/config/yazi/theme.toml" "$CONFIG_DIR/yazi/theme.toml"
+
+    # Link starship
+    link_config "$DOTFILES_DIR/config/starship/starship.toml" "$CONFIG_DIR/starship.toml"
 
     # Link scripts
     link_config "$DOTFILES_DIR/bin/cpu_stats.sh" "$BIN_DIR/cpu_stats.sh"
@@ -264,6 +269,7 @@ while [[ $# -gt 0 ]]; do
             rm -f "$CONFIG_DIR/hypr/hypridle.conf"
             rm -f "$CONFIG_DIR/hypr/hyprlock.conf"
             rm -f "$CONFIG_DIR/hypr/reload-hyprland.sh"
+            rm -f "$CONFIG_DIR/hypr/start-waybar.sh"
             rm -f "$CONFIG_DIR/hypr/cycle-display-mode.sh"
             rm -f "$CONFIG_DIR/hypr/host.conf"
             rm -f "$CONFIG_DIR/waybar/config.jsonc"
@@ -275,6 +281,7 @@ while [[ $# -gt 0 ]]; do
             rm -f "$HOME/.vimrc"
             rm -f "$CONFIG_DIR/yazi/yazi.toml"
             rm -f "$CONFIG_DIR/yazi/theme.toml"
+            rm -f "$CONFIG_DIR/starship.toml"
             rm -f "$BIN_DIR/cpu_stats.sh"
             rm -f "$BIN_DIR/ram_stats.sh"
             rm -f "$BIN_DIR/backup-to-nas.sh"

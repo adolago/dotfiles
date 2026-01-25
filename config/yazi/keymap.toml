@@ -1,0 +1,31 @@
+# Yazi Keymap Configuration
+# See: https://yazi-rs.github.io/docs/configuration/keymap
+
+[manager]
+prepend_keymap = [
+  # Agent-Core Integration
+  # 'a' prefix for all agent commands
+  { on = ["a", "s"], run = "plugin agent-core --args=send",     desc = "Send files to agent" },
+  { on = ["a", "a"], run = "plugin agent-core --args=analyze",  desc = "Analyze file with AI" },
+  { on = ["a", "c"], run = "plugin agent-core --args=context",  desc = "Add directory to context" },
+  { on = ["a", "e"], run = "plugin agent-core --args=edit",     desc = "Edit with agent" },
+
+  # Agent Workflows
+  { on = ["a", "m"], run = "plugin agent-core --args=menu",     desc = "Agent workflows menu" },
+  { on = ["a", "r"], run = "plugin agent-core --args=refactor", desc = "Refactor selected files" },
+  { on = ["a", "v"], run = "plugin agent-core --args=review",   desc = "Code review" },
+  { on = ["a", "d"], run = "plugin agent-core --args=document", desc = "Generate documentation" },
+  { on = ["a", "t"], run = "plugin agent-core --args=test",     desc = "Generate tests" },
+  { on = ["a", "x"], run = "plugin agent-core --args=explain",  desc = "Explain code" },
+  { on = ["a", "g"], run = "plugin agent-core --args=commit",   desc = "Smart git commit" },
+  { on = ["a", "p"], run = "plugin agent-core --args=compare",  desc = "Compare files" },
+]
+
+[input]
+prepend_keymap = []
+
+[completion]
+prepend_keymap = []
+
+[help]
+prepend_keymap = []
