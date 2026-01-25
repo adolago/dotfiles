@@ -1,7 +1,7 @@
-/* Waybar - Laptop (2x HiDPI) - Neutral dark with Selenized accents */
+/* Waybar - Laptop (1080p at 2x scale) - Neutral dark with Selenized accents */
 * {
     font-family: 'JetBrainsMono Nerd Font';
-    font-size: 24px;
+    font-size: 12px;
     background-color: rgba(28, 28, 28, 0.9);
     color: #adbcbc;
     border: none;
@@ -9,34 +9,34 @@
 }
 
 .modules-left {
-    margin-left: 8px;
+    margin-left: 4px;
 }
 
 .modules-right {
-    margin-right: 8px;
+    margin-right: 4px;
 }
 
 #workspaces button {
     all: initial;
     font-family: 'JetBrainsMono Nerd Font';
-    font-size: 24px;
-    padding: 0 8px;
-    margin: 0 2px;
-    min-width: 16px;
+    font-size: 12px;
+    padding: 0 4px;
+    margin: 0 1px;
+    min-width: 8px;
     color: #adbcbc;
     background: transparent;
     border: none;
-    border-bottom: 2px solid transparent;
+    border-bottom: 1px solid transparent;
 }
 
 #workspaces button.active {
     color: #41c7b9;
-    border-bottom: 2px solid #41c7b9;
+    border-bottom: 1px solid #41c7b9;
 }
 
 /* Occupied but not focused - subtle indicator */
 #workspaces button:not(.empty):not(.active) {
-    border-bottom: 2px solid #72898f;
+    border-bottom: 1px solid #72898f;
 }
 
 #workspaces button.empty {
@@ -45,29 +45,29 @@
 
 #workspaces button.urgent {
     color: #fa5750;
-    border-bottom: 2px solid #fa5750;
+    border-bottom: 1px solid #fa5750;
 }
 
 #cpu, #battery, #pulseaudio, #custom-screenrecording-indicator {
-    min-width: 12px;
-    margin: 0 7.5px;
+    min-width: 6px;
+    margin: 0 4px;
 }
 
 #memory {
-    margin-left: 15px;
+    margin-left: 8px;
 }
 
 #custom-cpu-full {
-    margin-left: 15px;
+    margin-left: 8px;
 }
 
 #tray {
-    margin-right: 16px;
+    margin-right: 8px;
 }
 
 #bluetooth {
-    margin-right: 17px;
-    min-width: 30px;
+    margin-right: 8px;
+    min-width: 15px;
     color: #adbcbc;
 }
 
@@ -80,11 +80,11 @@
 }
 
 #network {
-    margin-right: 13px;
+    margin-right: 6px;
 }
 
 #clock {
-    margin-left: 8.75px;
+    margin-left: 4px;
     color: #adbcbc;
 }
 
@@ -93,9 +93,9 @@
 }
 
 #custom-screenrecording-indicator {
-    min-width: 12px;
-    margin-left: 8.75px;
-    font-size: 10px;
+    min-width: 6px;
+    margin-left: 4px;
+    font-size: 5px;
 }
 
 #custom-screenrecording-indicator.active {
