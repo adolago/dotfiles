@@ -56,7 +56,7 @@ config.font_size = 12.0
 config.line_height = 1.3
 config.adjust_window_size_when_changing_font_size = true
 
-config.window_decorations = 'NONE'
+config.window_decorations = 'RESIZE'
 config.enable_tab_bar = true
 config.hide_tab_bar_if_only_one_tab = true
 config.tab_bar_at_bottom = true
@@ -70,7 +70,7 @@ config.window_frame = {
 }
 
 config.window_padding = { left = 8, right = 8, top = 8, bottom = 8 }
-config.window_background_opacity = 0.95
+config.window_background_opacity = 1.0
 
 --------------------------------------------------------------------------------
 -- Terminal Behavior
@@ -91,7 +91,8 @@ end)
 
 -- Wayland / GPU
 config.enable_wayland = true
-config.front_end = 'OpenGL'
+config.front_end = 'WebGpu'
+config.webgpu_power_preference = 'LowPower'
 
 -- Let ALT pass through for keybindings (not compose characters)
 config.send_composed_key_when_left_alt_is_pressed = false
