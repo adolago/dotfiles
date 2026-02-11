@@ -32,7 +32,7 @@ extract = [
   { run = 'unar "$1"', desc = "Extract here", for = "unix" },
 ]
 play = [
-  { run = 'mpv "$@"', orphan = true, for = "unix" },
+  { run = 'mpv "$@"', for = "unix" },
 ]
 
 [open]

@@ -106,6 +106,23 @@ config.send_composed_key_when_right_alt_is_pressed = false
 -- ALT + t    = new tab
 -- CTRL+SHIFT = copy/paste (Linux standard)
 --------------------------------------------------------------------------------
+local function move_pane_to_new_tab(window, pane)
+  local pane_id = pane:pane_id()
+  local ok, _, err = pcall(function()
+    return wezterm.run_child_process({
+      'wezterm',
+      'cli',
+      'move-pane-to-new-tab',
+      '--pane-id',
+      tostring(pane_id),
+    })
+  end)
+  if not ok then
+    wezterm.log_error('move-pane-to-new-tab failed: ' .. tostring(err))
+    return
+  end
+end
+
 config.keys = {
   -- Pane navigation (ALT + hjkl)
   { key = 'h', mods = 'ALT', action = wezterm.action.ActivatePaneDirection 'Left' },
@@ -129,6 +146,7 @@ config.keys = {
   -- Tab management
   { key = 't', mods = 'ALT', action = wezterm.action.SpawnTab 'CurrentPaneDomain' },
   { key = 'w', mods = 'ALT|SHIFT', action = wezterm.action.CloseCurrentTab { confirm = false } },
+  { key = 'n', mods = 'ALT|SHIFT', action = wezterm.action_callback(move_pane_to_new_tab) },
   { key = '1', mods = 'ALT', action = wezterm.action.ActivateTab(0) },
   { key = '2', mods = 'ALT', action = wezterm.action.ActivateTab(1) },
   { key = '3', mods = 'ALT', action = wezterm.action.ActivateTab(2) },

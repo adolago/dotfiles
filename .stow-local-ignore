@@ -1,0 +1,16 @@
+^install\.sh$
+^secrets\.env$
+^\.sops\.yaml$
+^packages$
+^docs$
+^hosts$
+^waybar$
+^flags$
+^README\.md$
+^CLAUDE\.md$
+^WARP\.md$
+^LICENSE$
+^\.mailmap$
+^\.git$
+^\.claude$
+^\.stow-local-ignore$

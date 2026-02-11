@@ -76,13 +76,9 @@ waybar
 wl-clipboard
 wofi
 
-# === File Manager (GUI) ===
-thunar
-thunar-archive-plugin
-thunar-volman
-file-roller
+# === File Manager ===
+yazi
 gvfs
-tumbler
 
 # === Browsers (both) ===
 google-chrome

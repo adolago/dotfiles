@@ -30,9 +30,7 @@ dotfiles/
   wezterm/.config/wezterm/   # Stow package → ~/.config/wezterm/*
   wofi/.config/wofi/         # Stow package → ~/.config/wofi/*
   yazi/.config/yazi/         # Stow package → ~/.config/yazi/*
-  rofi/.config/rofi/         # Stow package → ~/.config/rofi/*
-  gtk/.config/gtk-*/         # Stow package → ~/.config/gtk-3.0, gtk-4.0
-  qt6ct/.config/qt6ct/       # Stow package → ~/.config/qt6ct/*
+  vim/                       # Stow package → ~/.vimrc
   scripts/bin/               # Stow package → ~/bin/*
   hosts/                     # Conditional (not stowed)
   waybar/                    # Conditional (not stowed)
@@ -70,7 +68,7 @@ Selenized Dark color scheme consistently applied across all applications:
 - **Accent**: `#41c7b9` (cyan)
 - **Text**: `#adbcbc`
 
-GTK apps use adw-gtk3-dark, Qt apps use Fusion via qt6ct, both with Papirus-Dark icons (teal folders).
+Vim leverages terminal ANSI colors from WezTerm configuration.
 
 ## Configuration Management
 

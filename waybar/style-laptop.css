@@ -48,8 +48,25 @@
     border-bottom: 1px solid #fa5750;
 }
 
-#cpu, #battery, #pulseaudio, #custom-screenrecording-indicator {
+#cpu, #pulseaudio, #custom-screenrecording-indicator {
     min-width: 6px;
+    margin: 0 4px;
+}
+
+#battery {
+    min-width: 6px;
+    margin: 0 4px;
+}
+
+#battery.warning {
+    color: #dbb32d;
+}
+
+#battery.critical {
+    color: #fa5750;
+}
+
+#backlight {
     margin: 0 4px;
 }
 
@@ -81,11 +98,49 @@
 
 #network {
     margin-right: 6px;
+    color: #adbcbc;
+}
+
+#network.disconnected {
+    color: #fa5750;
+}
+
+#network.ethernet {
+    color: #41c7b9;
+}
+
+#custom-dnd {
+    margin-right: 6px;
+    color: transparent;
+    min-width: 0;
+}
+
+#custom-dnd:not(.empty) {
+    color: #fa5750;
 }
 
 #clock {
     margin-left: 4px;
     color: #adbcbc;
+}
+
+#mpd {
+    margin-left: 8px;
+    color: #72898f;
+}
+
+#mpd.playing {
+    color: #41c7b9;
+}
+
+#mpd.paused {
+    color: #dbb32d;
+}
+
+#mpd.disconnected, #mpd.stopped {
+    color: transparent;
+    margin: 0;
+    padding: 0;
 }
 
 .hidden {

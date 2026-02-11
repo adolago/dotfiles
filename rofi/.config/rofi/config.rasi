@@ -1,0 +1,16 @@
+configuration {
+    modi: "drun,run,filebrowser,calc,emoji";
+    show-icons: true;
+    icon-theme: "Papirus-Dark";
+    terminal: "wezterm";
+    drun-display-format: "{name}";
+    display-drun: "Apps";
+    display-run: "Run";
+    display-filebrowser: "Files";
+    display-calc: "Calc";
+    display-emoji: "Emoji";
+    font: "JetBrainsMono Nerd Font 12";
+    click-to-exit: true;
+}
+
+@theme "/home/artur/.config/rofi/selenized-dark.rasi"

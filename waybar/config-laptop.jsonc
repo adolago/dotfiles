@@ -3,13 +3,16 @@
   "layer": "top",
   "position": "top",
   "spacing": 0,
-  "height": 26,
-  "modules-left": ["hyprland/workspaces"],
+  "height": 18,
+  "modules-left": ["hyprland/workspaces", "mpd"],
   "modules-center": ["clock"],
   "modules-right": [
+    "custom/dnd",
     "bluetooth",
+    "network",
     "tray",
     "pulseaudio",
+    "backlight",
     "battery",
     "custom/cpu-full",
     "custom/ram"
@@ -21,6 +24,23 @@
     "persistent-workspaces": {
       "*": 10
     }
+  },
+  "mpd": {
+    "server": "192.168.178.102",
+    "port": 6600,
+    "format": "{stateIcon} {title} - {artist}",
+    "format-disconnected": "",
+    "format-stopped": "",
+    "format-paused": "{stateIcon} {title}",
+    "state-icons": {
+      "paused": "",
+      "playing": ""
+    },
+    "max-length": 30,
+    "tooltip-format": "{title}\n{artist} - {album}\n{elapsedTime:%M:%S}/{totalTime:%M:%S}",
+    "on-click": "MPD_HOST=192.168.178.102 mpc toggle",
+    "on-scroll-up": "MPD_HOST=192.168.178.102 mpc next",
+    "on-scroll-down": "MPD_HOST=192.168.178.102 mpc prev"
   },
   "custom/cpu-full": {
     "exec": "$HOME/bin/cpu_stats.sh",
@@ -34,10 +54,30 @@
     "format": "{}",
     "tooltip": false
   },
+  "backlight": {
+    "device": "intel_backlight",
+    "format": "BRI:{percent}%",
+    "on-scroll-up": "brightnessctl set 5%+",
+    "on-scroll-down": "brightnessctl set 5%-",
+    "tooltip": false
+  },
   "clock": {
     "format": "{:%a %d %H:%M:%S}",
+    "format-alt": "{:%Y-%m-%d}",
     "interval": 1,
-    "tooltip": false
+    "tooltip": true,
+    "tooltip-format": "<tt>{calendar}</tt>",
+    "calendar": {
+      "mode": "month",
+      "weeks-pos": "left",
+      "format": {
+        "months": "<span color='#adbcbc'><b>{}</b></span>",
+        "weeks": "<span color='#72898f'>{}</span>",
+        "weekdays": "<span color='#41c7b9'><b>{}</b></span>",
+        "today": "<span color='#41c7b9'><b><u>{}</u></b></span>"
+      }
+    },
+    "on-click": "toggle"
   },
   "network": {
     "format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"],
@@ -46,8 +86,18 @@
     "format-ethernet": "󰀂",
     "format-disconnected": "󰤮",
     "interval": 3,
-    "spacing": 1,
-    "tooltip": false
+    "tooltip": true,
+    "tooltip-format-ethernet": "{ifname}: {ipaddr}/{cidr}\n  {bandwidthUpBits}  {bandwidthDownBits}",
+    "tooltip-format-wifi": "{essid} ({signalStrength}%)\n  {bandwidthUpBits}  {bandwidthDownBits}",
+    "tooltip-format-disconnected": "Disconnected",
+    "on-click": "nm-connection-editor"
+  },
+  "custom/dnd": {
+    "exec": "makoctl mode | grep -q dnd && echo '󰂛' || echo ''",
+    "interval": 2,
+    "format": "{}",
+    "tooltip": false,
+    "on-click": "makoctl mode -t dnd"
   },
   "battery": {
     "format": "{capacity}% {icon}",
@@ -85,7 +135,7 @@
     "tooltip": false
   },
   "tray": {
-    "icon-size": 16,
-    "spacing": 17
+    "icon-size": 14,
+    "spacing": 8
   }
 }

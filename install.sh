@@ -1,6 +1,6 @@
 #!/bin/bash
 # Dotfiles installation script
-# Detects machine type and symlinks appropriate configs
+# Uses GNU Stow for declarative symlinks + manual links for conditional configs
 
 set -e
 
@@ -8,6 +8,9 @@ DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CONFIG_DIR="$HOME/.config"
 BIN_DIR="$HOME/bin"
 PACKAGES_DIR="$DOTFILES_DIR/packages"
+
+# Stow packages to deploy (each is a top-level directory mirroring $HOME)
+STOW_PACKAGES=(hypr mako starship wezterm wofi yazi rofi scripts gtk qt6ct)
 
 # Colors for output
 RED='\033[0;31m'
@@ -24,18 +27,17 @@ usage() {
     echo "Usage: $0 [OPTIONS]"
     echo ""
     echo "Options:"
-    echo "  --packages     Install packages from package lists"
+    echo "  --packages       Install packages from package lists"
     echo "  --packages-only  Only install packages, skip config symlinks"
-    echo "  --uninstall    Remove config symlinks"
-    echo "  --diff         Show package differences vs package lists"
-    echo "  -h, --help     Show this help"
+    echo "  --uninstall      Remove config symlinks"
+    echo "  --diff           Show package differences vs package lists"
+    echo "  -h, --help       Show this help"
     echo ""
     echo "Without options, only symlinks configs (no package installation)"
 }
 
 # Detect machine type
 detect_machine_type() {
-    # Check for battery - laptops have one
     if [ -d /sys/class/power_supply/BAT0 ] || [ -d /sys/class/power_supply/BAT1 ]; then
         echo "laptop"
     else
@@ -47,7 +49,6 @@ detect_machine_type() {
 parse_package_list() {
     local file="$1"
     if [ -f "$file" ]; then
-        # Remove inline comments, full-line comments, and empty lines
         sed 's/#.*//' "$file" | grep -v '^[[:space:]]*$' | awk '{print $1}' | tr '\n' ' '
     fi
 }
@@ -63,7 +64,6 @@ install_packages() {
 
     info "Installing packages for $machine_type..."
 
-    # Core packages (all machines)
     if [ -f "$PACKAGES_DIR/core.txt" ]; then
         info "Installing core packages..."
         local core_pkgs
@@ -74,7 +74,6 @@ install_packages() {
         fi
     fi
 
-    # Machine-specific packages
     local machine_file="$PACKAGES_DIR/${machine_type}.txt"
     if [ -f "$machine_file" ]; then
         info "Installing $machine_type-specific packages..."
@@ -95,11 +94,9 @@ show_package_diff() {
 
     info "Comparing installed packages with package lists..."
 
-    # Get currently installed explicit packages
     local installed
     installed=$(pacman -Qqe | sort)
 
-    # Get packages from lists
     local listed=""
     if [ -f "$PACKAGES_DIR/core.txt" ]; then
         listed="$listed $(parse_package_list "$PACKAGES_DIR/core.txt")"
@@ -118,129 +115,89 @@ show_package_diff() {
     comm -13 <(echo "$listed") <(echo "$installed") || true
 }
 
-# Backup existing config if it exists and isn't a symlink
-backup_if_exists() {
-    local target="$1"
-    if [ -e "$target" ] && [ ! -L "$target" ]; then
-        local backup="${target}.backup.$(date +%Y%m%d_%H%M%S)"
-        warn "Backing up existing $target to $backup"
-        mv "$target" "$backup"
-    elif [ -L "$target" ]; then
-        rm "$target"
-    fi
-}
-
-# Create symlink
+# Create symlink (for conditional configs only)
 link_config() {
     local src="$1"
     local dest="$2"
-    
-    backup_if_exists "$dest"
-    
-    # Create parent directory if needed
+
+    # Back up non-symlink files, remove existing symlinks
+    if [ -e "$dest" ] && [ ! -L "$dest" ]; then
+        local backup="${dest}.backup.$(date +%Y%m%d_%H%M%S)"
+        warn "Backing up existing $dest to $backup"
+        mv "$dest" "$backup"
+    elif [ -L "$dest" ]; then
+        rm "$dest"
+    fi
+
     mkdir -p "$(dirname "$dest")"
-    
     ln -sf "$src" "$dest"
-    info "Linked $src -> $dest"
+    info "Linked $(basename "$src") -> $dest"
 }
 
 # Main installation
 main() {
     local machine_type
     machine_type=$(detect_machine_type)
-    
+
     info "Detected machine type: $machine_type"
     info "Installing dotfiles from $DOTFILES_DIR"
-    
-    # Create directories
-    mkdir -p "$CONFIG_DIR/hypr"
-    mkdir -p "$CONFIG_DIR/waybar"
-    mkdir -p "$CONFIG_DIR/mako"
-    mkdir -p "$CONFIG_DIR/wofi"
-    mkdir -p "$CONFIG_DIR/wezterm"
-    mkdir -p "$CONFIG_DIR/yazi"
+
+    # Ensure target directories exist (prevents stow from folding them)
+    mkdir -p "$CONFIG_DIR/hypr" "$CONFIG_DIR/waybar" "$CONFIG_DIR/mako"
+    mkdir -p "$CONFIG_DIR/wofi" "$CONFIG_DIR/wezterm" "$CONFIG_DIR/yazi" "$CONFIG_DIR/rofi"
     mkdir -p "$BIN_DIR"
-    
-    # Link hyprland configs
-    link_config "$DOTFILES_DIR/config/hypr/hyprland.conf" "$CONFIG_DIR/hypr/hyprland.conf"
-    link_config "$DOTFILES_DIR/config/hypr/hypridle.conf" "$CONFIG_DIR/hypr/hypridle.conf"
-    link_config "$DOTFILES_DIR/config/hypr/hyprlock.conf" "$CONFIG_DIR/hypr/hyprlock.conf"
-    link_config "$DOTFILES_DIR/config/hypr/reload-hyprland.sh" "$CONFIG_DIR/hypr/reload-hyprland.sh"
-    link_config "$DOTFILES_DIR/config/hypr/start-waybar.sh" "$CONFIG_DIR/hypr/start-waybar.sh"
-    link_config "$DOTFILES_DIR/config/hypr/cycle-display-mode.sh" "$CONFIG_DIR/hypr/cycle-display-mode.sh"
-    chmod +x "$CONFIG_DIR/hypr/reload-hyprland.sh"
-    chmod +x "$CONFIG_DIR/hypr/start-waybar.sh"
-    chmod +x "$CONFIG_DIR/hypr/cycle-display-mode.sh"
-    
-    # Link host-specific config
+
+    # Deploy stow packages
+    info "Deploying stow packages: ${STOW_PACKAGES[*]}"
+    stow -d "$DOTFILES_DIR" -t "$HOME" --no-folding "${STOW_PACKAGES[@]}"
+    info "Stow deployment complete"
+
+    # Conditional configs: host-specific hyprland, waybar, browser flags
     if [ "$machine_type" = "laptop" ]; then
-        link_config "$DOTFILES_DIR/config/hypr/hosts/laptop.conf" "$CONFIG_DIR/hypr/host.conf"
-        link_config "$DOTFILES_DIR/config/flags/chrome-flags-laptop.conf" "$CONFIG_DIR/chrome-flags.conf"
-        link_config "$DOTFILES_DIR/config/flags/electron-flags-laptop.conf" "$CONFIG_DIR/electron-flags.conf"
+        link_config "$DOTFILES_DIR/hosts/laptop.conf"                  "$CONFIG_DIR/hypr/host.conf"
+        link_config "$DOTFILES_DIR/waybar/config-laptop.jsonc"         "$CONFIG_DIR/waybar/config.jsonc"
+        link_config "$DOTFILES_DIR/waybar/style-laptop.css"            "$CONFIG_DIR/waybar/style.css"
+        link_config "$DOTFILES_DIR/flags/chrome-flags-laptop.conf"     "$CONFIG_DIR/chrome-flags.conf"
+        link_config "$DOTFILES_DIR/flags/electron-flags-laptop.conf"   "$CONFIG_DIR/electron-flags.conf"
         info "Using laptop configuration (1x scale)"
     else
-        link_config "$DOTFILES_DIR/config/hypr/hosts/desktop.conf" "$CONFIG_DIR/hypr/host.conf"
-        link_config "$DOTFILES_DIR/config/flags/chrome-flags-desktop.conf" "$CONFIG_DIR/chrome-flags.conf"
-        link_config "$DOTFILES_DIR/config/flags/electron-flags-desktop.conf" "$CONFIG_DIR/electron-flags.conf"
+        link_config "$DOTFILES_DIR/hosts/desktop.conf"                 "$CONFIG_DIR/hypr/host.conf"
+        link_config "$DOTFILES_DIR/waybar/config.jsonc"                "$CONFIG_DIR/waybar/config.jsonc"
+        link_config "$DOTFILES_DIR/waybar/style-desktop.css"           "$CONFIG_DIR/waybar/style.css"
+        link_config "$DOTFILES_DIR/flags/chrome-flags-desktop.conf"    "$CONFIG_DIR/chrome-flags.conf"
+        link_config "$DOTFILES_DIR/flags/electron-flags-desktop.conf"  "$CONFIG_DIR/electron-flags.conf"
         info "Using desktop configuration (2x HiDPI scale)"
     fi
-    
-    # Link waybar (host-specific style)
-    if [ "$machine_type" = "laptop" ]; then
-        link_config "$DOTFILES_DIR/config/waybar/config-laptop.jsonc" "$CONFIG_DIR/waybar/config.jsonc"
-        link_config "$DOTFILES_DIR/config/waybar/style-laptop.css" "$CONFIG_DIR/waybar/style.css"
-    else
-        link_config "$DOTFILES_DIR/config/waybar/config.jsonc" "$CONFIG_DIR/waybar/config.jsonc"
-        link_config "$DOTFILES_DIR/config/waybar/style-desktop.css" "$CONFIG_DIR/waybar/style.css"
-    fi
-    
-    # Link mako
-    link_config "$DOTFILES_DIR/config/mako/config" "$CONFIG_DIR/mako/config"
-    
-    # Link wofi
-    link_config "$DOTFILES_DIR/config/wofi/config" "$CONFIG_DIR/wofi/config"
-    link_config "$DOTFILES_DIR/config/wofi/style.css" "$CONFIG_DIR/wofi/style.css"
+    # Chromium reads the same flags as Chrome
+    ln -sf "$CONFIG_DIR/chrome-flags.conf" "$CONFIG_DIR/chromium-flags.conf"
 
-    # Link wezterm
-    link_config "$DOTFILES_DIR/config/wezterm/wezterm.lua" "$CONFIG_DIR/wezterm/wezterm.lua"
-
-    # Link vim
-    link_config "$DOTFILES_DIR/config/vim/vimrc" "$HOME/.vimrc"
-
-    # Link yazi
-    link_config "$DOTFILES_DIR/config/yazi/yazi.toml" "$CONFIG_DIR/yazi/yazi.toml"
-    link_config "$DOTFILES_DIR/config/yazi/theme.toml" "$CONFIG_DIR/yazi/theme.toml"
-
-    # Link starship
-    link_config "$DOTFILES_DIR/config/starship/starship.toml" "$CONFIG_DIR/starship.toml"
-
-    # Link scripts
-    link_config "$DOTFILES_DIR/bin/cpu_stats.sh" "$BIN_DIR/cpu_stats.sh"
-    link_config "$DOTFILES_DIR/bin/ram_stats.sh" "$BIN_DIR/ram_stats.sh"
-    link_config "$DOTFILES_DIR/bin/backup-to-nas.sh" "$BIN_DIR/backup-to-nas.sh"
-    link_config "$DOTFILES_DIR/bin/mount-nas.sh" "$BIN_DIR/mount-nas.sh"
-    link_config "$DOTFILES_DIR/bin/setup-environment.sh" "$BIN_DIR/setup-environment.sh"
-    chmod +x "$BIN_DIR/cpu_stats.sh"
-    chmod +x "$BIN_DIR/ram_stats.sh"
-    chmod +x "$BIN_DIR/backup-to-nas.sh"
-    chmod +x "$BIN_DIR/mount-nas.sh"
-    chmod +x "$BIN_DIR/setup-environment.sh"
-    
     info ""
     info "Installation complete!"
     info ""
     info "Post-install steps:"
-    info "  1. Create ~/.config/hypr/hyprpaper.conf with your wallpaper"
-    info "  2. Create ~/.config/current-theme/ with hyprlock.conf and background"
-    info "  3. Adjust monitor settings in ~/.config/hypr/host.conf if needed"
-    info "  4. Run: hyprctl reload"
-    info ""
-    
-    # Show current host.conf monitor line for verification
+    info "  1. Adjust monitor settings in ~/.config/hypr/host.conf if needed"
+    info "  2. Run: hyprctl reload"
+
     if [ -f "$CONFIG_DIR/hypr/host.conf" ]; then
         info "Current monitor config:"
         grep "^monitor" "$CONFIG_DIR/hypr/host.conf" 2>/dev/null || true
     fi
+}
+
+# Uninstall: unstow packages + remove conditional links
+uninstall() {
+    info "Removing stow symlinks..."
+    stow -d "$DOTFILES_DIR" -t "$HOME" -D "${STOW_PACKAGES[@]}" 2>/dev/null || true
+
+    info "Removing conditional links..."
+    rm -f "$CONFIG_DIR/hypr/host.conf"
+    rm -f "$CONFIG_DIR/waybar/config.jsonc"
+    rm -f "$CONFIG_DIR/waybar/style.css"
+    rm -f "$CONFIG_DIR/chrome-flags.conf"
+    rm -f "$CONFIG_DIR/chromium-flags.conf"
+    rm -f "$CONFIG_DIR/electron-flags.conf"
+
+    info "Uninstall complete"
 }
 
 # Parse command line arguments
@@ -264,30 +221,7 @@ while [[ $# -gt 0 ]]; do
             shift
             ;;
         --uninstall)
-            info "Removing symlinks..."
-            rm -f "$CONFIG_DIR/hypr/hyprland.conf"
-            rm -f "$CONFIG_DIR/hypr/hypridle.conf"
-            rm -f "$CONFIG_DIR/hypr/hyprlock.conf"
-            rm -f "$CONFIG_DIR/hypr/reload-hyprland.sh"
-            rm -f "$CONFIG_DIR/hypr/start-waybar.sh"
-            rm -f "$CONFIG_DIR/hypr/cycle-display-mode.sh"
-            rm -f "$CONFIG_DIR/hypr/host.conf"
-            rm -f "$CONFIG_DIR/waybar/config.jsonc"
-            rm -f "$CONFIG_DIR/waybar/style.css"
-            rm -f "$CONFIG_DIR/mako/config"
-            rm -f "$CONFIG_DIR/wofi/config"
-            rm -f "$CONFIG_DIR/wofi/style.css"
-            rm -f "$CONFIG_DIR/wezterm/wezterm.lua"
-            rm -f "$HOME/.vimrc"
-            rm -f "$CONFIG_DIR/yazi/yazi.toml"
-            rm -f "$CONFIG_DIR/yazi/theme.toml"
-            rm -f "$CONFIG_DIR/starship.toml"
-            rm -f "$BIN_DIR/cpu_stats.sh"
-            rm -f "$BIN_DIR/ram_stats.sh"
-            rm -f "$BIN_DIR/backup-to-nas.sh"
-            rm -f "$BIN_DIR/mount-nas.sh"
-            rm -f "$BIN_DIR/setup-environment.sh"
-            info "Uninstall complete"
+            uninstall
             exit 0
             ;;
         -h|--help)
@@ -302,21 +236,17 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
-# Detect machine type
 MACHINE_TYPE=$(detect_machine_type)
 
-# Handle --diff
 if [ "$SHOW_DIFF" = true ]; then
     show_package_diff "$MACHINE_TYPE"
     exit 0
 fi
 
-# Install packages if requested
 if [ "$INSTALL_PACKAGES" = true ]; then
     install_packages "$MACHINE_TYPE"
 fi
 
-# Run main config installation unless --packages-only
 if [ "$PACKAGES_ONLY" = false ]; then
     main "$@"
 fi

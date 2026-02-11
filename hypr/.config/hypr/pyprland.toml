@@ -1,0 +1,20 @@
+[pyprland]
+plugins = ["scratchpads"]
+
+[scratchpads.term]
+command = "wezterm start --class scratchpad-term"
+class = "scratchpad-term"
+size = "80% 70%"
+animation = ""
+
+[scratchpads.btop]
+command = "wezterm start --class scratchpad-btop -- btop"
+class = "scratchpad-btop"
+size = "80% 70%"
+animation = ""
+
+[scratchpads.music]
+command = "wezterm start --class scratchpad-music -- ncmpcpp"
+class = "scratchpad-music"
+size = "60% 50%"
+animation = ""
